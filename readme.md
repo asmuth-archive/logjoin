@@ -2,12 +2,13 @@ kollekt
 =======
 
 ...listens on a redis pubsub channel and collects pieces of information in buckets (grouped by session/bucket-id). 
-the buckets are collected in ram and eventually persisted to disk. After a bucket has been persisted to disk all 
-appends to this bucket_id are discarded. A bucket is persisted if:
+the buckets are collected in ram and eventually persisted to disk. After a bucket has been persisted all 
+appends to this bucket_id are discarded. A bucket is persisted as soon as:
   
-  + the maximum bucket size is reached 
+  
   + no appends to the bucket for N seconds (bucket_timeout)
-  + the maximum bucket lifetime is reached
+  + or: the maximum bucket size is reached 
+  + or: the maximum bucket lifetime is reached
 
 
 Message Format
