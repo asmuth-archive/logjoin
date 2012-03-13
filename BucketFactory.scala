@@ -6,7 +6,9 @@ object BucketFactory { // EPIC WIN FTW! :)
 
   def get(bucket_id: String) : Bucket = {
     // buckets(bucket_id)
-    new Bucket(bucket_id)
+    val bucket = new Bucket(bucket_id)
+    bucket.start
+    return bucket
   }
 
   def kill(bucket_id: String){

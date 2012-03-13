@@ -14,10 +14,10 @@ class Dispatcher extends Actor {
 
 
   def parse(msg: String) : (String, String) =
-    ((p: Array[String]) => ((p(0), p(1)))) (msg split "\\|\\|\\|")
+    ((p: Array[String]) => ((p(0), p(1)))) (msg split ";")
 
 
-  def parseAndRoute(msg: String) = 
+  def parseAndRoute(msg: String) =
     (route _) tupled parse(msg)
-
+    
 }
