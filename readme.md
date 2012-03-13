@@ -1,7 +1,7 @@
 kollekt
 =======
 
-kollekt listens on a udp socket and collects pieces of information in buckets (grouped by session/bucket-id). 
+kollekt listens on a udp socket and collects a stream of data into buckets (grouped by session/bucket-id). 
 the buckets are collected in ram and eventually persisted to disk. After a bucket has been persisted all 
 appends to this bucket_id are discarded. A bucket is persisted as soon as:
   
@@ -11,41 +11,47 @@ appends to this bucket_id are discarded. A bucket is persisted as soon as:
 
 
 
-Message Format
---------------
+Input Format
+------------
 
-every message sent to the udp socket should be utf-8 encoded.
+the input is a stream of `(bucket_id, data)` tuples. every tuple should be sent via udp as an utf-8 encoded string.
 
-the message format is:
+the message/tuple format is:
     
     bucket_id;data
 
-example:
+example messages/tuples (one per line):
 
     session123;keyword1
     session123;keyword2
-    session456;otherkeyword
+    session456;keyword5
+    session123;keyword3
+    session456;keyword1
+    ...
 
 
 
 Output Format
 -------------
 
-all "closed" buckets are written per-timespan files. the default file length is 30 minutes. the created files will look like this:
+all "closed" buckets are written to per-timespan files. the default file length is 30 minutes. the created files will look like this:
 
     ./dump/1331597057.csv
     ./dump/1331598459.csv
     ./dump/1331510059.csv
 
-the csv format is 
+the format of the csv files is 
 
-    time_of_dump;bucket_id;data1;data2;data3;data4...
+    time_of_dump;bucket_id;data1;data2;data3;data4;(...);dataN
 
 example:
 
     $ cat ./dump/1331597057.csv
     1331597057.0012;session123;keyword1;keyword2
-    1331597057.0843;session751;otherkeyword1;mysearch;moredata
+    1331597057.0843;session751;keyword4;keyword1;keyword3
+    1331597057.1274;session542;keyword2
+    1331597057.2427;session642;keyword3;keyword2
+    ...
 
 
 
