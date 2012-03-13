@@ -14,13 +14,17 @@ appends to this bucket_id are discarded. A bucket is persisted as soon as:
 Message Format
 --------------
 
-every message sent to the udp socket should be utf-8 encoded and look like this:
+every message sent to the udp socket should be utf-8 encoded.
 
-    format: bucket_id;data
+the message format is:
+    
+    bucket_id;data
 
-    e.g.    session123;keyword1
-            session123;keyword2
-            session456;otherkeyword
+example:
+
+    session123;keyword1
+    session123;keyword2
+    session456;otherkeyword
 
 
 
