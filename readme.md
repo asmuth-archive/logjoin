@@ -10,29 +10,39 @@ appends to this bucket_id are discarded. A bucket is persisted as soon as:
   + or: the maximum bucket lifetime is reached
 
 
+
 Message Format
 --------------
 
 every message sent to the udp socket should be utf-8 encoded and look like this:
 
-    format: bucket_id|||data
+    format: bucket_id;data
 
-    e.g.    session123|||keyword1
-            session123|||keyword2
-            session456|||otherkeyword
+    e.g.    session123;keyword1
+            session123;keyword2
+            session456;otherkeyword
+
 
 
 Output Format
 -------------
 
-all "closed" buckets are dumped to simple files with the name `%timestamp%_%bucket_id%.dat` e.g.
-    
-    1331597057_bucketfoo.dat
-    1331597057_bucketsnafu.dat
-    1331597058_bucketfnord.dat
-    1331597059_bucketblubb.dat
-    1331597059_bucketbar.dat
-    1331597059_bucketshmoo.dat
+all "closed" buckets are written per-timespan files. the default file length is 30 minutes. the created files will look like this:
+
+    ./dump/1331597057.csv
+    ./dump/1331598459.csv
+    ./dump/1331510059.csv
+
+the csv format is 
+
+    time_of_dump;bucket_id;data1;data2;data3;data4...
+
+example:
+
+    $ cat ./dump/1331597057.csv
+    1331597057.0012;session123;keyword1;keyword2
+    1331597057.0843;session751;otherkeyword1;mysearch;moredata
+
 
 
 License
