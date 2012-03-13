@@ -95,7 +95,7 @@ private
 
   def sleep!
     interval = CONF[:session_lifetime].to_f / CONF[:session_words].max
-    sleep (interval / CONF[:session_count].to_f)
+    sleep (interval / CONF[:session_count].to_f) unless ENV["NO_SLEEP"]
   end
 
   def print!
