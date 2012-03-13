@@ -14,6 +14,8 @@ task :clean do
 end
 
 desc "build and run"
-task :buildrun => [:build, :run]
+task :buildrun do
+  exec "rake build && rake run"
+end
 
 task :default => :buildrun
