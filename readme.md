@@ -1,7 +1,7 @@
 kollekt
 =======
 
-...listens on a udp socket and collects pieces of information in buckets (grouped by session/bucket-id). 
+kollekt listens on a udp socket and collects pieces of information in buckets (grouped by session/bucket-id). 
 the buckets are collected in ram and eventually persisted to disk. After a bucket has been persisted all 
 appends to this bucket_id are discarded. A bucket is persisted as soon as:
   
@@ -20,6 +20,19 @@ every message sent to the udp socket should be utf-8 encoded and look like this:
     e.g.    session123|||keyword1
             session123|||keyword2
             session456|||otherkeyword
+
+
+Output Format
+-------------
+
+all "closed" buckets are dumped to simple files with the name `%timestamp%_%bucket_id%.dat` e.g.
+    
+    1331597057_bucketfoo.dat
+    1331597057_bucketsnafu.dat
+    1331597058_bucketfnord.dat
+    1331597059_bucketblubb.dat
+    1331597059_bucketbar.dat
+    1331597059_bucketshmoo.dat
 
 
 License
