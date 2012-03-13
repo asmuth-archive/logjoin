@@ -1,10 +1,9 @@
 kollekt
 =======
 
-...listens on a redis pubsub channel and collects pieces of information in buckets (grouped by session/bucket-id). 
+...listens on a udp socket and collects pieces of information in buckets (grouped by session/bucket-id). 
 the buckets are collected in ram and eventually persisted to disk. After a bucket has been persisted all 
 appends to this bucket_id are discarded. A bucket is persisted as soon as:
-  
   
   + no appends to the bucket for N seconds (bucket_timeout)
   + or: the maximum bucket size is reached 
@@ -14,7 +13,7 @@ appends to this bucket_id are discarded. A bucket is persisted as soon as:
 Message Format
 --------------
 
-a publish on the the redis channel should look like this:
+every message sent to the udp socket should be utf-8 encoded and look like this:
 
     format: bucket_id|||data
 
