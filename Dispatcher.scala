@@ -22,7 +22,7 @@ class Dispatcher extends Actor {
     (route _) tupled parse(msg)
 
   
-  def heartbeat() = 
+  def heartbeat() =
     BucketFactory.broadcast(HearbeatSig)
     
 }

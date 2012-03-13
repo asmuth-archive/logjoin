@@ -12,7 +12,9 @@ object BucketFactory { // EPIC WIN FTW! :)
   }
 
   def kill(bucket_id: String) = {
-    // suicide function / callback
+    val bucket = buckets(bucket_id)
+    buckets -= bucket_id
+    bucket ! KilledSig
   }
 
   def broadcast(msg: Any) = 
