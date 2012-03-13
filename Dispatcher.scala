@@ -1,7 +1,7 @@
 import scala.actors.Actor
 import scala.actors.Actor._
 
-class Listener extends Actor {
+class Dispatcher extends Actor {
 
   def act() = {
     Actor.loop{ react{
