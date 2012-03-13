@@ -5,10 +5,17 @@ class Bucket(bucket_id: String) extends Actor {
 
   println("new bucket: " + bucket_id)
 
-  def act(){ 
+  def act() = { 
     Actor.loop{ react{
-      case msg: String => println("bucket add:" + msg)  
+      case HearbeatSig => heartbeat
+      case msg: String => println("bucket add:" + msg)
     }}
   }
 
+  def heartbeat() =
+    println("heartbeat")
+
+  def killed() =
+  	println("BUCKET KILLED: " + bucket_id)
+ 
 }

@@ -5,7 +5,8 @@ class Dispatcher extends Actor {
 
   def act() = {
     Actor.loop{ react{
-      case msg: String => parseAndRoute(msg)  
+      case msg: String => parseAndRoute(msg)
+      case HearbeatSig => heartbeat
     }}
   }
 
@@ -19,5 +20,9 @@ class Dispatcher extends Actor {
 
   def parseAndRoute(msg: String) =
     (route _) tupled parse(msg)
+
+  
+  def heartbeat() = 
+    BucketFactory.broadcast(HearbeatSig)
     
 }

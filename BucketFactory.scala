@@ -15,6 +15,9 @@ object BucketFactory { // EPIC WIN FTW! :)
     // suicide function / callback
   }
 
+  def broadcast(msg: Any) = 
+    buckets.foreach((cur: (String, Bucket)) => cur._2 ! msg)
+  
   private def create(bucket_id: String) : Bucket = {
     buckets += ((bucket_id, new Bucket(bucket_id)))
     buckets(bucket_id).start

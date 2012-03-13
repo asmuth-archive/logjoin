@@ -8,6 +8,9 @@ object Kollekt{
   val dispatcher = new Dispatcher
   dispatcher.start
 
+  val heartbeat = new Heartbeat(dispatcher)
+
+
   def main(args : Array[String]) : Unit = 
     listen("localhost", 2323)
 
