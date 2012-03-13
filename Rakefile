@@ -1,16 +1,16 @@
 desc "build"
 task :build do
-  %x(scalac *scala)
+  exec "scalac *scala"
 end
 
 desc "run"
 task :run do
-  %x(scala Kollekt)
+  exec "scala Kollekt"
 end
 
 desc "cleanup"
 task :clean do 
-  %x(rm *.class)
+  exec "rm *.class"
 end
 
 desc "build and run"
