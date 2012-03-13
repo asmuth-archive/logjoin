@@ -1,17 +1,33 @@
 #!/usr/bin/env ruby
+require "socket"
+
+if RUBY_VERSION != "1.9.3"
+  puts "ruby 1.9.3 please"
+  exit!
+end
+
+if ARGV.length != 2
+  puts "usage: #{$0} host port"
+  exit!
+end
+
 
 CONF = {
   
   # how many concurrent sessions?
-  :session_count => 5000,
+  :session_count => 7000,
 
   # how many secons should a session last
   :session_lifetime => 600,
 
   # how many keywords per session?
-  :session_words => (1..40)
+  :session_words => (1..100),
+
+  :trgt_host => ARGV[0],
+  :trgt_port => ARGV[1].to_i
 
 }
+
 
 WORDS = %w{
   buonanotte uno quattro cinque sette dieci arrivederci arrivederla molto scusi 
@@ -32,40 +48,70 @@ WORDS = %w{
 
 
 class Range 
+
   def size
     max-min
   end
-end
 
-class Hash
-  def rand_key
-    keys.sample
-  end
 end
 
 
 class Emitter
 
-  Sessions = Hash.new
-
-  def self.emit!(session_id)
-    puts "#{session_id};#{WORDS.sample}"
+  def self.loop!
+    instance = self.new
+    loop{ instance.next! }
   end
 
-  def self.next!
-    if Sessions.length < CONF[:session_count]
-      n = rand(CONF[:session_words].size) + CONF[:session_words].min
-      Sessions[rand(8**32).to_s(36)] = n
-    end
+  def initialize
+    @sessions = Hash.new
+    @total = Hash.new{ |h,k| h[k] = 0 }
+    @socket = UDPSocket.new
+    @last_print = 0
+    @last_tuples = 0
+  end
 
-    emit!(session = Sessions.rand_key)
-    Sessions.delete(session) if (Sessions[session] -= 1) < 0
+  def emit!(session_id)
+    @total[:tuples] += 1
+    socket_args = [0, CONF[:trgt_host], CONF[:trgt_port]]
+    send_args = ["#{session_id};#{WORDS.sample}", socket_args]
+    @socket.send(*send_args.flatten)
+  end
 
+  def next!
+    new_session! if @sessions.length < CONF[:session_count]
+    emit!(session = @sessions.keys.sample)
+    @sessions.delete(session) if (@sessions[session] -= 1) < 0
+    ((Time.now.to_i - @last_print) > 1) ? print! : sleep!
+  end
+
+private
+
+  def new_session!
+    @total[:sessions] += 1
+    n = rand(CONF[:session_words].size) + CONF[:session_words].min
+    @sessions[rand(8**32).to_s(36)] = n
+  end
+
+  def sleep!
     interval = CONF[:session_lifetime].to_f / CONF[:session_words].max
     sleep (interval / CONF[:session_count].to_f)
   end
 
+  def print!
+    tuples_per_sec = (
+      (@total[:tuples] - @last_tuples) / 
+      (Time.now - @last_print).to_f
+    )
+    @last_print = Time.now.to_i
+    @last_tuples = @total[:tuples]
+    puts [ 
+      "#{@sessions.size} active sessions",
+      "#{tuples_per_sec.round(1)} tuples/s",
+      "#{@total[:tuples]} tuples sent in #{@total[:sessions]} sessions" 
+    ].join(", ")
+  end
+
 end
 
-
-loop{ Emitter.next! }
+Emitter.loop!
