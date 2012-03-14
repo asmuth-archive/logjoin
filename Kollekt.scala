@@ -1,12 +1,13 @@
 import scala.collection.mutable.HashMap
 
+
 object Kollekt{
 
   val config = HashMap[String, Int](
-    "bucket_timeout" -> 20,  // buckets time out after two minutes of inactivity
-    "bucket_maxsize" -> 50,   // max 50 items per bucket
-    "bucket_maxage" -> 3600,  // buckets time out after one hour
-    "store_deadlist" -> 0    // do not store a list of dead buckets by default
+    "bucket_timeout" -> 120,        // buckets time out after two minutes of inactivity
+    "bucket_maxsize" -> 1024,       // max 1024 items per bucket
+    "bucket_maxage"  -> 3600 * 24,  // buckets time out after one day
+    "store_deadlist" -> 0           // do not store a list of dead buckets by default
   )
 
   val stats = HashMap[String, Int](
@@ -15,6 +16,31 @@ object Kollekt{
     "buckets_killed_maxage" -> 0,
     "dropped_messages" -> 0
   )
+
+  def usage() = {
+    println("usage: kollekt [-lpxh] [options] /path/to/out_dir")
+    println("")
+    println("  -l, --listen")
+    println("    listen on udp for tuples on this address")
+    println("")
+    println("  -p, --port")
+    println("    listen on udp for tuples on this address")
+    println("")
+    println("  -x, --keep-deadlist")
+    println("    keep a list of killed buckets in mem (ensure bucket uniqueness)")
+    println("")
+    println("  --bucket-timeout")
+    println("    flush buckets to disk after N seconds of inactivity (default: 2min)")
+    println("")
+    println("  --bucket-maxsize")
+    println("    flush buckets to disk when they reach N items (default: 1024)")
+    println("")
+    println("  --bucket-maxage")
+    println("    flush buckets to disk after at most N seconds (default: 1day)")
+    println("")
+    println("  -h, --help")
+    println("    print this message")
+  }
 
 
   val writer = new Writer  
@@ -25,9 +51,10 @@ object Kollekt{
   writer.start
   dispatcher.start
 
-
-  def main(args : Array[String]) : Unit = 
+  def main(args : Array[String]) : Unit = {
     listener.listen("localhost", 2323)
+  }
+    
 
 }
 

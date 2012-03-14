@@ -10,6 +10,33 @@ appends to this bucket_id are discarded. A bucket is persisted as soon as:
   + or: the maximum bucket lifetime is reached
 
 
+Usage
+-----
+
+kollekt [-lpxh] [OPTIONS]... /path/to/out_dir
+
+  -l, --listen
+    listen on udp for tuples on this address
+
+  -p, --port
+    listen on udp for tuples on this address
+
+  -x, --keep-deadlist
+    keep a list of killed buckets in mem (ensure bucket uniqueness)
+
+  --bucket-timeout
+    flush buckets to disk after N seconds of inactivity (default: 2min)
+
+  --bucket-maxsize
+    flush buckets to disk when they reach N items (default: 1024)
+
+  --bucket-maxage
+    flush buckets to disk after at most N seconds (default: 1day)
+
+  -h, --help
+    print this message
+
+
 
 Input Format
 ------------
