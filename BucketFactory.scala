@@ -10,7 +10,7 @@ object BucketFactory { // EPIC WIN FTW! :)
     if (killed_buckets contains bucket_id unary_!)
       get(bucket_id) ! msg
     else
-      println("!!! dropping msg to dead bucket " + bucket_id)
+      Kollekt.stats("dropped_messages") += 1
       
 
   def broadcast(msg: Any) = 

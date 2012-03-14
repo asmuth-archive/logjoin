@@ -8,8 +8,11 @@ object Kollekt{
     "bucket_maxage" -> 3600   // buckets time out after one hour
   )
 
-  val stats = new HashMap[String, Int].withDefault(
-    (s: String) => 0
+  val stats = HashMap[String, Int](
+    "buckets_persisted" -> 0,
+    "buckets_killed_maxsize" -> 0,
+    "buckets_killed_maxage" -> 0,
+    "dropped_messages" -> 0
   )
 
 

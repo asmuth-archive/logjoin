@@ -10,8 +10,10 @@ class Writer extends Actor {
   }
 
 
-  def persist(bucket_id: String, data: Set[String]) =
-    println(("FIXPAUL:PERSIST", bucket_id, data))
+  def persist(bucket_id: String, data: Set[String]) = {
+    Kollekt.stats("buckets_persisted") += 1
+    // println(("FIXPAUL:PERSIST", bucket_id, data))    
+  }
 
 
 }

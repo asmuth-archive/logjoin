@@ -33,14 +33,19 @@ class Bucket(bucket_id: String) extends Actor {
     val since_append = (now.getTime() - last_append_at.getTime())
     val since_create = (now.getTime() - created_at.getTime())
 
-    if (since_append > (Kollekt.config("bucket_timeout") * 1000))
+    if (since_append > (Kollekt.config("bucket_timeout") * 1000)){
+      BucketFactory.kill(bucket_id)  
+    }
+      
+    if (since_create > (Kollekt.config("bucket_maxage") * 1000)){
+      Kollekt.stats("buckets_killed_maxage") += 1
+      BucketFactory.kill(bucket_id)  
+    }
+      
+    if (data.size > Kollekt.config("bucket_maxsize")){
+      Kollekt.stats("buckets_killed_maxsize") += 1
       BucketFactory.kill(bucket_id)
-
-    if (since_create > (Kollekt.config("bucket_maxage") * 1000))
-      BucketFactory.kill(bucket_id)
-
-    if (data.size > Kollekt.config("bucket_maxsize"))
-      BucketFactory.kill(bucket_id)
+    }
  
   }
 
