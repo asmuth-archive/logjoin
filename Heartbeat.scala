@@ -20,6 +20,6 @@ class Heartbeat(dispatcher: Dispatcher){
     }))
   }
 
-  scheduler.scheduleAtFixedRate(callback, 0, 1000, TimeUnit.MILLISECONDS)
+  scheduler.scheduleAtFixedRate(callback, 0, 500, TimeUnit.MILLISECONDS)
 
 }
