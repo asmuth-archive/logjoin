@@ -26,7 +26,11 @@ object BucketFactory { // EPIC WIN FTW! :)
 
   def kill(bucket_id: String) = {
     val bucket = buckets(bucket_id)
-    killed_buckets += bucket_id
+
+    if (Kollekt.config("store_deadlist") == 1) {
+      killed_buckets += bucket_id
+    }
+
     buckets -= bucket_id
     bucket ! KilledSig
   }
