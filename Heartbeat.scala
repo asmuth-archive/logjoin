@@ -13,6 +13,6 @@ class Heartbeat(dispatcher: Dispatcher){
     def run = dispatcher ! HearbeatSig
   }
 
-  scheduler.scheduleAtFixedRate(callback, 0, 20000, TimeUnit.MILLISECONDS)  
+  scheduler.scheduleAtFixedRate(callback, 0, 1000, TimeUnit.MILLISECONDS)
 
 }
