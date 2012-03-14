@@ -12,7 +12,7 @@ class Listener(dispatcher: Dispatcher){
   def listen(host: String, port: Int) = {
     val sock = new DatagramSocket(port) 
 
-    val buffer_size = 1024
+    val buffer_size = 4096
     val buffer = new Array[Byte](buffer_size) 
     val packet = new DatagramPacket(buffer, buffer_size)  
 
