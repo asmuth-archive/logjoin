@@ -13,9 +13,12 @@ object Kollekt{
   )
 
 
-  val dispatcher = new Dispatcher  
+  val writer = new Writer  
+  val dispatcher = new Dispatcher
   val heartbeat = new Heartbeat(dispatcher)
   val listener = new Listener(dispatcher)
+
+  writer.start
   dispatcher.start
 
 

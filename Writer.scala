@@ -5,12 +5,13 @@ class Writer extends Actor {
 
   def act(){ 
     Actor.loop{ react{
-      case msg: String => persist(msg)  
+      case msg: (String, Set[String]) => (persist _) tupled msg
     }}
   }
 
-  def persist(msg: String){
-    println("persisting: " + msg)
-  }
+
+  def persist(bucket_id: String, data: Set[String]) =
+    println(("FIXPAUL:PERSIST", bucket_id, data))
+
 
 }
