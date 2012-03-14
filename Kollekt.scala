@@ -3,7 +3,7 @@ import scala.collection.mutable.HashMap
 object Kollekt{
 
   val config = HashMap[String, Int](
-    "bucket_timeout" -> 600,  // buckets time out after 10 minutes of inactivity
+    "bucket_timeout" -> 60,   // buckets time out after one minute of inactivity
     "bucket_maxsize" -> 50,   // max 50 items per bucket
     "bucket_maxage" -> 3600   // buckets time out after one hour
   )

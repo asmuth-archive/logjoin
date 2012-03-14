@@ -18,10 +18,10 @@ CONF = {
   :session_count => 7000,
 
   # how many secons should a session last
-  :session_lifetime => 600,
+  :session_lifetime => 60,
 
   # how many keywords per session?
-  :session_words => (1..100),
+  :session_words => (1..40),
 
   :trgt_host => ARGV[0],
   :trgt_port => ARGV[1].to_i
