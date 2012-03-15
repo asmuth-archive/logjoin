@@ -24,7 +24,7 @@ Usage
         keep a list of killed buckets in mem (ensure bucket uniqueness)
 
       -s, --file-size
-        set the output file 'length' to N seconds (default: 10min)
+        set the output file 'length' to N seconds (default: 1hour)
 
       --bucket-timeout
         flush buckets to disk after N seconds of inactivity (default: 2min)

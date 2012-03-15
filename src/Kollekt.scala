@@ -36,7 +36,7 @@ object Kollekt{
     println("    keep a list of killed buckets in mem (ensure bucket uniqueness)")
     println("")
     println("  -s, --file-size")
-    println("    set the output file 'length' to N seconds (default: 10min)")
+    println("    set the output file 'length' to N seconds (default: 1hour)")
     println("")
     println("  --bucket-timeout")
     println("    flush buckets to disk after N seconds of inactivity (default: 2min)")

@@ -14,13 +14,14 @@ class Writer extends Actor {
   def persist(bucket_id: String, data: Array[String]) = {
     Kollekt.stats("buckets_persisted") += 1
     val now = new java.util.Date()
+    var now_ts = now.getTime() / 1000
 
     val csv_head = now.getTime().toString() + ";" + bucket_id;
     val csv_str = (csv_head /: data)(_ + ";" + _)
 
     val csv_length = Kollekt.config("out_filelength")
-    val csv_time = (now.getTime() / csv_length) * csv_length
-    val csv_file = Kollekt.output_dir + csv_time.toString
+    val csv_time = ((now_ts / csv_length) * csv_length).toString 
+    val csv_file = Kollekt.output_dir + "/" + csv_time + ".csv"
 
     append(csv_file, csv_str)
   }
