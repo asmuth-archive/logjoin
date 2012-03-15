@@ -17,8 +17,10 @@ class Writer extends Actor {
 
     val csv_head = now.getTime().toString() + ";" + bucket_id;
     val csv_str = (csv_head /: data)(_ + ";" + _)
+ 
+    val csv_file = Kollekt.output_dir + "/fixme.dat"
 
-    append("fixme.dat", csv_str)
+    append(csv_file, csv_str)
   }
 
   def append(fileName:String, textData:String) =
