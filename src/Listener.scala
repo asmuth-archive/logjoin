@@ -18,6 +18,7 @@ class Listener(dispatcher: Dispatcher){
 
     while (true) { 
       sock.receive(packet)
+      Kollekt.stats("received_tuples") += 1
       dispatch(packet)
     } 
   }

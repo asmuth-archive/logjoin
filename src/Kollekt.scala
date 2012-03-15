@@ -1,8 +1,6 @@
 import scala.collection.mutable.HashMap
 
-// TODOS
-//   main: parse all options
-//   stats: tuples/second
+// FIXPAUL: implement option parsing
 
 object Kollekt{
 
@@ -17,6 +15,7 @@ object Kollekt{
   )
 
   val stats = HashMap[String, Int](
+    "received_tuples" -> 0,
     "buckets_persisted" -> 0,
     "buckets_killed_maxsize" -> 0,
     "buckets_killed_maxage" -> 0,
