@@ -1,13 +1,12 @@
 kollekt
 =======
 
-kollekt listens on a udp socket and collects a stream of data into buckets (grouped by session/bucket-id). 
-the buckets are collected in ram and eventually persisted to disk. After a bucket has been persisted all 
-appends to this bucket_id are discarded. A bucket is persisted as soon as:
+kollekt listens on a udp socket and collects bits of data in buckets (grouped by a session/bucket-id). 
+the buckets are kept in ram and eventually flushed to disk when one of these conditions was met:
   
-  + no appends to the bucket for N seconds (bucket_timeout)
-  + or: the maximum bucket size is reached 
-  + or: the maximum bucket lifetime is reached
+  + no appends to the bucket for N seconds (bucket_idle_timeout)
+  + or: the maximum bucket size is reached (bucket_maxsize)
+  + or: the maximum bucket lifetime is reached (bucket_maxage)
 
 
 Usage
@@ -24,17 +23,21 @@ Usage
       -x, --keep-deadlist
         keep a list of killed buckets in mem (ensure bucket uniqueness)
 
-      -t, --bucket-timeout
+      -s, --file-size
+        set the output file 'length' to N seconds (default: 10min)
+
+      --bucket-timeout
         flush buckets to disk after N seconds of inactivity (default: 2min)
 
-      -s, --bucket-maxsize
+      --bucket-maxsize
         flush buckets to disk when they reach N items (default: 1024)
 
-      -a, --bucket-maxage
+      --bucket-maxage
         flush buckets to disk after at most N seconds (default: 1day)
 
       -h, --help
         print this message
+
 
 
 
