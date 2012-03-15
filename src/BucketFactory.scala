@@ -24,7 +24,8 @@ object BucketFactory { // EPIC WIN FTW! :)
       create(bucket_id)
 
 
-  def kill(bucket_id: String) = {
+  def kill(bucket_id: String) : Unit = {
+    if (buckets contains bucket_id unary_!) return ()
     val bucket = buckets(bucket_id)
 
     if (Kollekt.config("store_deadlist") == 1) {
