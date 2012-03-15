@@ -7,7 +7,7 @@ object Kollekt{
   var output_dir = "/tmp/kollekt/"
 
   val config = HashMap[String, Int](
-    "bucket_timeout" -> 120,   // buckets time out after two minutes of inactivity
+    "bucket_timeout" -> 7200,  // buckets time out after two hours of inactivity
     "bucket_maxsize" -> 1024,  // max 1024 items per bucket
     "bucket_maxage"  -> 86400, // buckets time out after one day
     "store_deadlist" -> 0,     // do not store a list of dead buckets by default
@@ -38,7 +38,7 @@ object Kollekt{
     println("    set the output file 'length' to N seconds (default: 1hour)")
     println("")
     println("  --bucket-timeout")
-    println("    flush buckets to disk after N seconds of inactivity (default: 2min)")
+    println("    flush buckets to disk after N seconds of inactivity (default: 2hours)")
     println("")
     println("  --bucket-maxsize")
     println("    flush buckets to disk when they reach N items (default: 1024)")

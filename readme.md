@@ -27,7 +27,7 @@ Usage
         set the output file 'length' to N seconds (default: 1hour)
 
       --bucket-timeout
-        flush buckets to disk after N seconds of inactivity (default: 2min)
+        flush buckets to disk after N seconds of inactivity (default: 2hours)
 
       --bucket-maxsize
         flush buckets to disk when they reach N items (default: 1024)
