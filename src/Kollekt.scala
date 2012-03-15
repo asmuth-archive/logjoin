@@ -1,7 +1,6 @@
 import scala.collection.mutable.HashMap
 
 // TODOS
-//   writer: timestamp-filenames
 //   main: parse all options
 //   stats: tuples/second
 
