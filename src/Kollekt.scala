@@ -1,5 +1,10 @@
 import scala.collection.mutable.HashMap
 
+// TODOS
+//   bucket: list instead of set
+//   writer: timestamp-filenames
+//   main: parse alloptions
+//   stats: tuples/second
 
 object Kollekt{
 
