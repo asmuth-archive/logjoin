@@ -1,9 +1,8 @@
 import scala.collection.mutable.HashMap
 
 // TODOS
-//   bucket: list instead of set
 //   writer: timestamp-filenames
-//   main: parse alloptions
+//   main: parse all options
 //   stats: tuples/second
 
 object Kollekt{
@@ -14,7 +13,8 @@ object Kollekt{
     "bucket_timeout" -> 120,   // buckets time out after two minutes of inactivity
     "bucket_maxsize" -> 1024,  // max 1024 items per bucket
     "bucket_maxage"  -> 86400, // buckets time out after one day
-    "store_deadlist" -> 0      // do not store a list of dead buckets by default
+    "store_deadlist" -> 0,     // do not store a list of dead buckets by default
+    "out_filelength" -> 3600   // start a new file every one hour
   )
 
   val stats = HashMap[String, Int](
@@ -36,13 +36,16 @@ object Kollekt{
     println("  -x, --keep-deadlist")
     println("    keep a list of killed buckets in mem (ensure bucket uniqueness)")
     println("")
-    println("  -t, --bucket-timeout")
+    println("  -s, --file-size")
+    println("    set the output file 'length' to N seconds (default: 10min)")
+    println("")
+    println("  --bucket-timeout")
     println("    flush buckets to disk after N seconds of inactivity (default: 2min)")
     println("")
-    println("  -s, --bucket-maxsize")
+    println("  --bucket-maxsize")
     println("    flush buckets to disk when they reach N items (default: 1024)")
     println("")
-    println("  -a, --bucket-maxage")
+    println("  --bucket-maxage")
     println("    flush buckets to disk after at most N seconds (default: 1day)")
     println("")
     println("  -h, --help")

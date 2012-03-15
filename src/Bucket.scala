@@ -10,7 +10,7 @@ class Bucket(bucket_id: String) extends Actor {
   val created_at = new java.util.Date()
   var last_append_at = new java.util.Date()
 
-  var data = Set[String]()
+  var data = Array[String]()
 
   def act() = { 
     Actor.loop{ react{
@@ -23,7 +23,7 @@ class Bucket(bucket_id: String) extends Actor {
   
   def append(msg: String) = {
     last_append_at = new java.util.Date()
-    data += msg
+    data :+ msg
   }
 
 

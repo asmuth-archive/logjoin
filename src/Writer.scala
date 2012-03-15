@@ -7,11 +7,11 @@ class Writer extends Actor {
 
   def act(){ 
     Actor.loop{ react{
-      case msg: (String, Set[String]) => (persist _) tupled msg
+      case msg: (String, Array[String]) => (persist _) tupled msg
     }}
   }
 
-  def persist(bucket_id: String, data: Set[String]) = {
+  def persist(bucket_id: String, data: Array[String]) = {
     Kollekt.stats("buckets_persisted") += 1
     val now = new java.util.Date()
 
