@@ -23,7 +23,7 @@ class Bucket(bucket_id: String) extends Actor {
   
   def append(msg: String) = {
     last_append_at = new java.util.Date()
-    data :+ msg
+    data = data ++ Array(msg)
   }
 
 
