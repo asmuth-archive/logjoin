@@ -3,11 +3,13 @@ import scala.collection.mutable.HashMap
 
 object Kollekt{
 
+  var output_dir = "/tmp/kollekt/"
+
   val config = HashMap[String, Int](
-    "bucket_timeout" -> 120,        // buckets time out after two minutes of inactivity
-    "bucket_maxsize" -> 1024,       // max 1024 items per bucket
-    "bucket_maxage"  -> 3600 * 24,  // buckets time out after one day
-    "store_deadlist" -> 0           // do not store a list of dead buckets by default
+    "bucket_timeout" -> 120,   // buckets time out after two minutes of inactivity
+    "bucket_maxsize" -> 1024,  // max 1024 items per bucket
+    "bucket_maxage"  -> 86400, // buckets time out after one day
+    "store_deadlist" -> 0      // do not store a list of dead buckets by default
   )
 
   val stats = HashMap[String, Int](
@@ -42,20 +44,25 @@ object Kollekt{
     println("    print this message")
   }
 
-
   val writer = new Writer  
   val dispatcher = new Dispatcher
-  val heartbeat = new Heartbeat(dispatcher)
-  val listener = new Listener(dispatcher)
-
-  writer.start
-  dispatcher.start
-
+  
   def main(args : Array[String]) : Unit = {
+    if (args.length == 0) return usage
+
+    output_dir = args(args.length-1)
+
+    println(config + (("output_dir", output_dir)))
+
+    val heartbeat = new Heartbeat(dispatcher)
+
+    dispatcher.start
+    writer.start
+
+    val listener = new Listener(dispatcher)
     listener.listen("localhost", 2323)
   }
     
 
 }
-
 
